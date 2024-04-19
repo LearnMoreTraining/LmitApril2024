@@ -2,7 +2,6 @@ Feature: Amazon Homepage Validation
   @sc01 @beta @amazon01
     #before
   Scenario: search functionaity
-
     When user enter the product name "iphone" in search box
     Then verfiy the search result
   #after
@@ -20,7 +19,6 @@ Feature: Amazon Homepage Validation
   @amazon02
     #before
   Scenario: handle the static dropdown
-
     When user selects the required value from the category dropdown
     And extract the dropdown values
   #after
