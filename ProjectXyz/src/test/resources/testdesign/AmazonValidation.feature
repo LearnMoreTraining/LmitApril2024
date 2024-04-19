@@ -1,5 +1,5 @@
 Feature: Amazon Homepage Validation
-  @sc01 @alpha @amazon01
+  @sc01 @beta @amazon01
     #before
   Scenario: search functionaity
 
