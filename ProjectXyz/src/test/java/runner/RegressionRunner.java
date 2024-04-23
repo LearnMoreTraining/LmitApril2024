@@ -10,8 +10,11 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = {"src/test/resources/testdesign"},
         glue = {"stepdef","hookspack"},
-        tags = "@mutliple",
-        plugin = {"pretty"}
+        tags = "@amazon01",
+        plugin = {"pretty",
+                "html:target/test-output/report.html",
+                "json:target/test-output/report.json",
+                "junit:target/test-output/report.xml"}
 )
 
 public class RegressionRunner {

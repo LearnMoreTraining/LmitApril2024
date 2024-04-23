@@ -201,4 +201,27 @@ public class SalesForceSteps extends BaseCode {
         driver.findElement(By.id("password")).sendKeys(ReadExcel.getExcelData("login",1,0));
 
     }
+
+    @Given("enable disable")
+    public void enableDisable() {
+
+      boolean radio=  driver.findElement(By.id("ControlGroupSearchView_AvailabilitySearchInputSearchView_OneWay")).isSelected();
+        Assert.assertTrue(radio);
+
+    boolean field =  driver.findElement(By.id("custom_date_picker_id_2"))  .isEnabled(); //false
+        Assert.assertFalse(field);
+
+        driver.findElement(By.xpath("//*[text()='FROM']")).isDisplayed();
+
+
+       String s= driver.findElement(By.id("marketDate_2")).getAttribute("style");
+
+        //display: block; opacity: 1; pointer-events: inherit;
+
+        if(s.contains("0.5")){
+            
+        }
+
+
+    }
 }
