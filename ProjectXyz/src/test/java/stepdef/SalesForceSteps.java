@@ -85,6 +85,7 @@ public class SalesForceSteps extends BaseCode {
         Assert.assertEquals(acutalTitle,expectedTitle);
 
 
+
     }
 
 
@@ -219,7 +220,7 @@ public class SalesForceSteps extends BaseCode {
         //display: block; opacity: 1; pointer-events: inherit;
 
         if(s.contains("0.5")){
-            
+
         }
 
 

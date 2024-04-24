@@ -14,6 +14,12 @@ public class Hooks {
         BaseCode.lauchBrowser();
          }
 
+    @Before()
+    public void preConditio() throws IOException {
+        System.out.println("Execution Starts...........");
+        BaseCode.lauchBrowser();
+    }
+
     @After()
     public void postCondition(){
 

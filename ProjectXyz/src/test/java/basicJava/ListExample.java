@@ -10,6 +10,7 @@ public class ListExample {
         l.add(45);
         l.add(78);
         l.add(90);
+        l.add(2,80);
         System.out.println(l);
         l.add(23);
         System.out.println(l);
