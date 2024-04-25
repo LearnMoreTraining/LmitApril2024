@@ -1,9 +1,8 @@
 package hookspack;
 
-import io.cucumber.java.After;
-import io.cucumber.java.AfterStep;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeStep;
+import io.cucumber.java.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import resuable.BaseCode;
 
 import java.io.IOException;
@@ -20,6 +19,7 @@ public class Hooks {
     @After()
     public void postCondition(){
 
+        BaseCode.driver.quit();
         System.out.println("Execution Ended");
     }
 
@@ -30,8 +30,10 @@ public class Hooks {
     }
 
     @AfterStep()
-    public void afterStep(){
-        System.out.println("afterstep");
+    public void afterStep(Scenario sc){
+
+        byte[] bytedata =((TakesScreenshot)BaseCode.driver).getScreenshotAs(OutputType.BYTES);
+        sc.attach(bytedata,"image/png",sc.getName());
     }
 
 

@@ -183,20 +183,25 @@ public class SalesForceSteps extends BaseCode {
         Actions a = new Actions(driver);
         a.clickAndHold(e).build().perform();
         driver.findElement(By.linkText("Baby Wishlist")).sendKeys(Keys.chord(Keys.CONTROL,Keys.ENTER));
+
+    }
+
+    @When("user navigates to child window")
+    public void userNavigatesToChildWindow() {
         String parentProperty =driver.getWindowHandle();
-       Set<String> handleValues = driver.getWindowHandles();
+        Set<String> handleValues = driver.getWindowHandles();
 
-       for(String winPop:handleValues) {
+        for(String winPop:handleValues) {
 
-           if (!winPop.equals(parentProperty)) {
-               driver.switchTo().window(winPop);
-               break;
-           }
-       }
+            if (!winPop.equals(parentProperty)) {
+                driver.switchTo().window(winPop);
+                break;
+            }
+        }
 
-       driver.findElement(By.linkText("Create your wishlist")).click();
+        driver.findElement(By.linkText("Create your wishlist")).click();
         System.out.println(driver.getTitle());
-      driver.switchTo().window(parentProperty);
+        //  driver.switchTo().window(parentProperty);
 
     }
 
@@ -270,4 +275,6 @@ public class SalesForceSteps extends BaseCode {
         Assert.assertEquals("I am an alert box",alertMessage);
         driver.switchTo().alert().dismiss();
     }
+
+
 }

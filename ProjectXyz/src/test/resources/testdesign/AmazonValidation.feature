@@ -31,6 +31,7 @@ Feature: Amazon Homepage Validation
   @amazon03
   Scenario: handle the mouse actions
     Given user selects the baby wishlist
+    When user navigates to child window
 
    @drag01
   Scenario: drag and drop
