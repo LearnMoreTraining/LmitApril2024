@@ -2,9 +2,12 @@ Feature: Amazon Homepage Validation
   @sc01 @beta @amazon01
     #before
   Scenario: search functionaity
-
+    #beforestep
     When user enter the product name "iphone" in search box
+    #afterstep
+      # beforestep
     Then verfiy the search result
+  #afterstep
   #after
 
   @mutliple

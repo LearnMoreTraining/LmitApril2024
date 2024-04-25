@@ -1,21 +1,23 @@
 package stepdef;
 
 import org.junit.Assert;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import resuable.BaseCode;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import resuable.ReadExcel;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class SalesForceSteps extends BaseCode {
 
@@ -181,6 +183,20 @@ public class SalesForceSteps extends BaseCode {
         Actions a = new Actions(driver);
         a.clickAndHold(e).build().perform();
         driver.findElement(By.linkText("Baby Wishlist")).sendKeys(Keys.chord(Keys.CONTROL,Keys.ENTER));
+        String parentProperty =driver.getWindowHandle();
+       Set<String> handleValues = driver.getWindowHandles();
+
+       for(String winPop:handleValues) {
+
+           if (!winPop.equals(parentProperty)) {
+               driver.switchTo().window(winPop);
+               break;
+           }
+       }
+
+       driver.findElement(By.linkText("Create your wishlist")).click();
+        System.out.println(driver.getTitle());
+      driver.switchTo().window(parentProperty);
 
     }
 
@@ -223,6 +239,35 @@ public class SalesForceSteps extends BaseCode {
 
         }
 
+        driver.findElement(By.id("quote")).click();
 
+        // 10 seconds
+        try {
+            driver.findElement(By.id("change_text")).getText();
+        }
+        catch(ElementClickInterceptedException e){
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+            wait.pollingEvery(Duration.ofSeconds(10)); //6 times
+            wait.ignoring(NoSuchElementException.class);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("change_text")));
+            driver.findElement(By.id("change_text")).getText();
+        }
+        finally {
+
+        }
+
+
+
+    }
+
+    @Given("user handles the alert")
+    public void userHandlesTheAlert() {
+
+        driver.findElement(By.xpath("//button[@class='btn btn-danger']")).click();
+
+       String alertMessage = driver.switchTo().alert().getText();
+        Assert.assertEquals("I am an alert box",alertMessage);
+        driver.switchTo().alert().dismiss();
     }
 }

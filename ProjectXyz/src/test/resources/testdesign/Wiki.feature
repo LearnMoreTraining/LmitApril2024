@@ -4,3 +4,7 @@ Feature: Wiki
   Scenario: table handling
    # Given user navigates to wiki page
     When user extarct the column one value
+
+    @alert
+  Scenario: Alert
+    Given user handles the alert

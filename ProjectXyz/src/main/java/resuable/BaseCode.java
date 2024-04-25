@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
 
 public class BaseCode {
@@ -45,5 +46,6 @@ public class BaseCode {
        // driver.get(pro.getProperty("url"));
         driver.navigate().to(pro.getProperty("url"));
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 }
