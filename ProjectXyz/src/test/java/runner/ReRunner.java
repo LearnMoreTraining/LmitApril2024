@@ -1,6 +1,5 @@
 package runner;
 
-
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
@@ -8,9 +7,8 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 
 @CucumberOptions(
-        features = {"src/test/resources/testdesign"},
+        features = {"@target/rerun.txt"},
         glue = {"stepdef","hookspack"},
-        tags = "@amazon01",
         plugin = {"pretty",
                 "html:target/test-output/report.html",
                 "json:target/test-output/report.json",
@@ -19,5 +17,5 @@ import org.junit.runner.RunWith;
         }
 )
 
-public class RegressionRunner {
+public class ReRunner {
 }

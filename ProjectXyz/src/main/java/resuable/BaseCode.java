@@ -15,6 +15,7 @@ import java.util.Properties;
 
 public class BaseCode {
     public static WebDriver driver ;
+
     public static Properties pro;
     public static void lauchBrowser() throws IOException {
         File file = new File("src/main/resources/configurations/utility.properties");

@@ -1,5 +1,5 @@
 Feature: Amazon Homepage Validation
-  @sc01 @beta @amazon01
+  @LM-T2 @sc01 @beta @amazon01
     #before
   Scenario: search functionaity
     #beforestep
@@ -36,3 +36,7 @@ Feature: Amazon Homepage Validation
    @drag01
   Scenario: drag and drop
     Given user drag and drops
+
+     @fileupload
+  Scenario: file upload
+    Given user upload a photo

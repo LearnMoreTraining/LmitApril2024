@@ -2,6 +2,7 @@ package stepdef;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import resuable.BaseCode;
@@ -15,9 +16,7 @@ import resuable.ReadExcel;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SalesForceSteps extends BaseCode {
 
@@ -75,7 +74,7 @@ public class SalesForceSteps extends BaseCode {
     @When("user enter the product name {string} in search box")
     public void userEnterTheProductNameInSearchBox(String productName) {
         amazonProdName = productName;
-        driver.findElement(By.xpath("//label[@for='twotabsearchtextbox']/following-sibling::input")).sendKeys(productName);
+        driver.findElement(By.xpath("//labl[@for='ttabsearchtextbox']/following-sibling::input")).sendKeys(productName);
         driver.findElement(By.id("nav-search-submit-button")).click();
     }
 
@@ -120,59 +119,73 @@ public class SalesForceSteps extends BaseCode {
 //           String colOneValue= driver.findElements(By.xpath("//table[@class='infobox vcard']/descendant::tr/child::th")).get(j).getText();
 //           System.out.println(colOneValue);
 //        }
-        List<String> val = new ArrayList<String>();
-        List<WebElement> columnOneElement = driver.findElements(By.xpath("//table[@class='infobox vcard']/descendant::tr/child::th"));
-        for(WebElement e:columnOneElement){
-           val.add( e.getText());
+//        List<String> val = new ArrayList<String>();
+//        List<WebElement> columnOneElement = driver.findElements(By.xpath("//table[@class='infobox vcard']/descendant::tr/child::th"));
+//        for(WebElement e:columnOneElement){
+//           val.add( e.getText());
+//        }
+//
+//        System.out.println(val);
+//        for(String d:val){
+//
+//           if(d.equals("Headquarters")){
+//               Assert.assertTrue(true);
+//               break;
+//           }
+//        }
+
+
+        WebElement tab = driver.findElement(By.xpath("//table[@class='infobox vcard']"));
+
+        int sizzz =tab.findElements(By.tagName("th")).size();
+
+        List<String> columnOneValue = new ArrayList<String>(); //empty list
+        for(int k=0 ; k <sizzz; k++){
+
+            columnOneValue.add( tab.findElements(By.tagName("th")).get(k).getText());
         }
 
-        System.out.println(val);
-        for(String d:val){
+        System.out.println(columnOneValue);
 
-           if(d.equals("Headquarters")){
-               Assert.assertTrue(true);
-               break;
-           }
+        List <WebElement> ce = tab.findElements(By.tagName("th"));
+        List <String> values = new ArrayList<String>();
+        for(WebElement h:ce){
+            values.add(h.getText());
         }
 
 
- //       WebElement tab = driver.findElement(By.xpath("//table[@class='infobox vcard']"));
+        int coln2 =tab.findElements(By.tagName("td")).size();
 
-//        int sizzz =tab.findElements(By.tagName("th")).size();
-//
-//        List<String> columnOneValue = new ArrayList<String>(); //empty list
-//        for(int k=0 ; k <sizzz; k++){
-//
-//            columnOneValue.add( tab.findElements(By.tagName("th")).get(k).getText());
-//        }
-//
-//        System.out.println(columnOneValue);
+        List <String> colTwoValues = new ArrayList<String>();
+        for(int k=2 ; k <coln2; k++){
+            colTwoValues.add(tab.findElements(By.tagName("td")).get(k).getText());
+        }
 
-//        List <WebElement> ce = tab.findElements(By.tagName("th"));
-//        List <String> values = new ArrayList<String>();
-//        for(WebElement h:ce){
-//            values.add(h.getText());
-//        }
+        System.out.println(colTwoValues);
 
-//
-//        int coln2 =tab.findElements(By.tagName("td")).size();
-//
-//        List <String> colTwoValues = new ArrayList<String>();
-//        for(int k=2 ; k <coln2; k++){
-//            colTwoValues.add(tab.findElements(By.tagName("td")).get(k).getText());
-//        }
-//
-//        System.out.println(colTwoValues);
-//
-//       int acqtableCount= driver.findElements(By.xpath("//table[@class='wikitable sortable jquery-tablesorter']/child::tbody/child::tr/child::td[3]")).size();
-//
-//        for(int h =0 ; h < acqtableCount; h++){
-//            driver.findElements(By.xpath("//table[@class='wikitable sortable jquery-tablesorter']/child::tbody/child::tr/child::td[3]")).get(h).getText();
-//
-//        }
-//
-//        WebElement acqElement= driver.findElement(By.xpath("//table[@class='wikitable sortable jquery-tablesorter']"));
-//        acqElement.findElements(By.xpath("/child::tbody/child::tr/child::td[3]")).size();
+        Map<List, List> m = new HashMap<List,List>();
+        m.put(columnOneValue,colTwoValues);
+
+        for(Map.Entry h:m.entrySet()){
+
+            switch (h.getKey().toString()) {
+                case "INSIN" -> Assert.assertEquals("INE009A010321", h.getValue());
+                case "Company type" -> Assert.assertEquals("Public", h.getValue());
+            }
+
+
+        }
+
+
+       int acqtableCount= driver.findElements(By.xpath("//table[@class='wikitable sortable jquery-tablesorter']/child::tbody/child::tr/child::td[3]")).size();
+
+        for(int h =0 ; h < acqtableCount; h++){
+            driver.findElements(By.xpath("//table[@class='wikitable sortable jquery-tablesorter']/child::tbody/child::tr/child::td[3]")).get(h).getText();
+
+        }
+
+        WebElement acqElement= driver.findElement(By.xpath("//table[@class='wikitable sortable jquery-tablesorter']"));
+        acqElement.findElements(By.xpath("/child::tbody/child::tr/child::td[3]")).size();
 
     }
 
@@ -277,4 +290,22 @@ public class SalesForceSteps extends BaseCode {
     }
 
 
+    @Given("user upload a photo")
+    public void userUploadAPhoto() throws InterruptedException {
+
+        Thread.sleep(Duration.ofSeconds(20));
+
+    driver.findElement(By.xpath("//div[@class='position-absolute color-bg-default rounded-2 color-fg-default px-2 py-1 left-0 bottom-0 ml-2 mb-2 border']")).click();
+   WebElement addFile = driver.findElement(By.xpath("//label[@class='dropdown-item text-normal']"));
+   addFile.click();
+   addFile.sendKeys("D:/uploadImage/IMG_3878.jpeg");
+
+   driver.findElement(By.xpath("//span[text()='Set new profile picture']")).click();
+
+    }
+
+    @Then("verify the login status")
+    public void verifyTheLoginStatus() {
+
+    }
 }
